@@ -7,20 +7,21 @@ const modalRoot = document.getElementById('modal-root');
 
 const Modal = ({ onClose, modal }) => {
   useEffect(() => {
+    const handlKeyDown = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
     window.addEventListener('keydown', handlKeyDown);
     window.removeEventListener('keydown', handlKeyDown);
-  }, []);
+  }, [onClose]);
 
-  const handlKeyDown = e => {
-    if (e.code === 'Escape') {
-      onClose();
-    }
-  };
   const handleBackdrop = e => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
+
   return createPortal(
     <div className={css.Overlay} onClick={handleBackdrop}>
       <div className={css.Modal}>
