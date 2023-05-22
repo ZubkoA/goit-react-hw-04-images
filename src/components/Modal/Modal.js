@@ -9,13 +9,13 @@ const Modal = ({ onClose, modal }) => {
   useEffect(() => {
     window.addEventListener('keydown', handlKeyDown);
     window.removeEventListener('keydown', handlKeyDown);
-    const handlKeyDown = e => {
-      if (e.code === 'Escape') {
-        onClose();
-      }
-    };
-  }, [onClose]);
+  }, []);
 
+  const handlKeyDown = e => {
+    if (e.code === 'Escape') {
+      onClose();
+    }
+  };
   const handleBackdrop = e => {
     if (e.target === e.currentTarget) {
       onClose();
