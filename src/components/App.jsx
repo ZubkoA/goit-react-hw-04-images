@@ -17,7 +17,8 @@ const App = () => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [page, setPage] = useState(1);
 
-  const [modal, setModal] = useState({ url: '', tags: '' });
+  const [tags, setTags] = useState('');
+  const [url, setUrl] = useState('');
   const [error, setError] = useState(null);
   //
 
@@ -37,7 +38,7 @@ const App = () => {
       })
       .catch(error => setError(error))
       .finally(() => setIsLoading(false));
-  }, [page, isLoading, searchImg]);
+  }, [page, searchImg]);
 
   const closeModal = () => {
     setIsShowModal(false);
@@ -54,7 +55,8 @@ const App = () => {
   };
   const savedModal = (tags, url) => {
     setIsShowModal(true);
-    setModal(tags, url);
+    setTags(tags);
+    setUrl(url);
   };
 
   return (
@@ -64,14 +66,14 @@ const App = () => {
       <Searchbar handleSearch={handleSearch} />
       {isLoading && <Loader />}
 
-      {/* {hits !== null && <ImageGallery hits={hits} onData={savedModal} />} */}
+      {hits !== null && <ImageGallery hits={hits} onData={savedModal} />}
       {hits?.length > 0 && <Button handleClick={handleAdd} title="Load more" />}
       {hits?.length === 0 && (
         <div style={{ fontSize: '24px', fontWeight: '600' }}>
           No results {searchImg}!
         </div>
       )}
-      {isShowModal && <Modal onClose={closeModal} modal={modal} />}
+      {isShowModal && <Modal onClose={closeModal} tags={tags} url={url} />}
     </div>
   );
 };

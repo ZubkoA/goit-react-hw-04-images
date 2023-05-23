@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById('modal-root');
 
-const Modal = ({ onClose, modal }) => {
+const Modal = ({ onClose, tags, url }) => {
   useEffect(() => {
     const handlKeyDown = e => {
       if (e.code === 'Escape') {
@@ -25,7 +25,7 @@ const Modal = ({ onClose, modal }) => {
   return createPortal(
     <div className={css.Overlay} onClick={handleBackdrop}>
       <div className={css.Modal}>
-        <img src={modal.url} alt={modal.tags} />
+        <img src={url} alt={tags} />
       </div>
     </div>,
     modalRoot
