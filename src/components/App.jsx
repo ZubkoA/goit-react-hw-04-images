@@ -38,7 +38,7 @@ const App = () => {
       })
       .catch(error => setError(error))
       .finally(() => setIsLoading(false));
-  }, [page, searchImg]);
+  }, [page, searchImg, hits]);
 
   const closeModal = () => {
     setIsShowModal(false);
