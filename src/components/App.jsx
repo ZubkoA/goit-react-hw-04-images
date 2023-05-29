@@ -7,7 +7,7 @@ import css from './App.module.css';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
 import { ToastContainer } from 'react-toastify';
-
+import { toast } from 'react-toastify';
 import React from 'react';
 
 const App = () => {
@@ -20,6 +20,7 @@ const App = () => {
   const [tags, setTags] = useState('');
   const [url, setUrl] = useState('');
   const [error, setError] = useState(null);
+
   //
 
   useEffect(() => {
@@ -35,7 +36,9 @@ const App = () => {
         return Promise.reject(new Error('Did not find'));
       })
       .then(data => {
-        setHits(prev => [...prev, ...data.hits]);
+        if (data.hits.length === 0) {
+          toast.warn(`Didn't find ${searchImg}`);
+        } else setHits(prev => [...prev, ...data.hits]);
       })
       .catch(error => setError(error))
       .finally(() => setIsLoading(false));
@@ -49,6 +52,7 @@ const App = () => {
     setHits([]);
     setSearchImg(searchImg);
     setPage(1);
+    setError(null);
   };
 
   const handleAdd = () => {
@@ -67,13 +71,13 @@ const App = () => {
       <Searchbar handleSearch={handleSearch} />
       {isLoading && <Loader />}
 
-      {hits !== null && <ImageGallery hits={hits} onData={savedModal} />}
-      {hits?.length > 0 && <Button handleClick={handleAdd} title="Load more" />}
-      {hits?.length === 0 && (
-        <div style={{ fontSize: '24px', fontWeight: '600' }}>
-          No results {searchImg}!
-        </div>
+      {hits?.length > 0 && (
+        <>
+          <ImageGallery hits={hits} onData={savedModal} />{' '}
+          <Button handleClick={handleAdd} title="Load more" />
+        </>
       )}
+
       {isShowModal && <Modal onClose={closeModal} tags={tags} url={url} />}
     </div>
   );
