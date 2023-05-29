@@ -32,13 +32,12 @@ const App = () => {
         return Promise.reject(new Error('Did not find'));
       })
       .then(data => {
-        hits === null
-          ? setHits(data.hits)
-          : setHits(prev => [...prev, ...data.hits]);
+        if (hits === null) return setHits(data.hits);
+        return setHits(prev => [...prev, ...data.hits]);
       })
       .catch(error => setError(error))
       .finally(() => setIsLoading(false));
-  }, [page, searchImg, hits]);
+  }, [page, searchImg]);
 
   const closeModal = () => {
     setIsShowModal(false);

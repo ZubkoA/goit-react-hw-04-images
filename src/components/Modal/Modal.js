@@ -12,8 +12,8 @@ const Modal = ({ onClose, tags, url }) => {
         onClose();
       }
     };
-    window.addEventListener('keydown', handlKeyDown);
     window.removeEventListener('keydown', handlKeyDown);
+    window.addEventListener('keydown', handlKeyDown);
   }, [onClose]);
 
   const handleBackdrop = e => {
