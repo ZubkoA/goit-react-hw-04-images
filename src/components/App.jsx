@@ -12,7 +12,7 @@ import React from 'react';
 
 const App = () => {
   const [searchImg, setSearchImg] = useState('');
-  const [hits, setHits] = useState(null);
+  const [hits, setHits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
   const [page, setPage] = useState(1);
@@ -23,6 +23,9 @@ const App = () => {
   //
 
   useEffect(() => {
+    if (!searchImg) {
+      return;
+    }
     setIsLoading(true);
     getSearchImg(searchImg, page)
       .then(res => {
@@ -32,8 +35,7 @@ const App = () => {
         return Promise.reject(new Error('Did not find'));
       })
       .then(data => {
-        if (hits === null) return setHits(data.hits);
-        return setHits(prev => [...prev, ...data.hits]);
+        setHits(prev => [...prev, ...data.hits]);
       })
       .catch(error => setError(error))
       .finally(() => setIsLoading(false));
@@ -44,8 +46,8 @@ const App = () => {
   };
 
   const handleSearch = searchImg => {
+    setHits([]);
     setSearchImg(searchImg);
-    setHits(null);
     setPage(1);
   };
 
