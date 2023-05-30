@@ -11,8 +11,8 @@ const Modal = ({ onClose, tags, url }) => {
       if (e.code === 'Escape') {
         onClose();
       }
+      window.removeEventListener('keydown', handlKeyDown);
     };
-    window.removeEventListener('keydown', handlKeyDown);
     window.addEventListener('keydown', handlKeyDown);
   }, [onClose]);
 
@@ -33,12 +33,10 @@ const Modal = ({ onClose, tags, url }) => {
 };
 
 Modal.propType = {
-  modal: PropTypes.objectOf(
-    PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      tags: PropTypes.string.isRequired,
-    })
-  ),
+  modal: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    tags: PropTypes.string.isRequired,
+  }),
 };
 
 export default Modal;

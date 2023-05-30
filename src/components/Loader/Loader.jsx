@@ -4,7 +4,7 @@ import React from 'react';
 const Loader = () => {
   const style = {
     position: 'fixed',
-    top: '50%',
+    bottom: '0%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
   };

@@ -71,11 +71,9 @@ const App = () => {
       <Searchbar handleSearch={handleSearch} />
       {isLoading && <Loader />}
 
-      {hits?.length > 0 && (
-        <>
-          <ImageGallery hits={hits} onData={savedModal} />{' '}
-          <Button handleClick={handleAdd} title="Load more" />
-        </>
+      {hits?.length > 0 && <ImageGallery hits={hits} onData={savedModal} />}
+      {hits?.length > 0 && !isLoading && (
+        <Button handleClick={handleAdd} title="Load more" />
       )}
 
       {isShowModal && <Modal onClose={closeModal} tags={tags} url={url} />}
