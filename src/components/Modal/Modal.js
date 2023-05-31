@@ -11,9 +11,10 @@ const Modal = ({ onClose, tags, url }) => {
       if (e.code === 'Escape') {
         onClose();
       }
-      window.removeEventListener('keydown', handlKeyDown);
     };
     window.addEventListener('keydown', handlKeyDown);
+    return()=>{ window.removeEventListener('keydown', handlKeyDown);}
+   
   }, [onClose]);
 
   const handleBackdrop = e => {
